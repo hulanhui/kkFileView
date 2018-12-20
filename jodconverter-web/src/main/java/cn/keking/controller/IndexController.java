@@ -1,4 +1,4 @@
-package cn.keking.web.controller;
+package cn.keking.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

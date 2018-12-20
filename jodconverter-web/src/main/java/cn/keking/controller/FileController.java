@@ -1,4 +1,4 @@
-package cn.keking.web.controller;
+package cn.keking.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

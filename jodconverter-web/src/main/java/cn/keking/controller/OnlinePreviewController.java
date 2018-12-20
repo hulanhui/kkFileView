@@ -1,4 +1,4 @@
-package cn.keking.web.controller;
+package cn.keking.controller;
 
 import cn.keking.service.FileConverQueueTask;
 import cn.keking.service.FilePreview;
