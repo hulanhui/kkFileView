@@ -2,7 +2,6 @@ package cn.keking.utils;
 
 import cn.keking.model.FileAttribute;
 import cn.keking.model.FileType;
-import com.google.common.collect.Lists;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -32,8 +31,8 @@ public class FileUtils {
     final String REDIS_FILE_PREVIEW_IMGS_KEY = "converted-preview-imgs-file";//压缩包内图片文件集合
     @Autowired
     RedissonClient redissonClient;
-    @Value("${file.dir}")
-    String fileDir;
+    @Value("${file.preview}")
+    String filePreView;
 
     @Value("${converted.file.charset}")
     String charset;
@@ -93,8 +92,8 @@ public class FileUtils {
     }
     /**
      * 从url中剥离出文件名
+     * 格式如：http://keking.ufile.ucloud.com.cn/20171113164107_月度绩效表模板(新).xls?UCloudPublicKey=ucloudtangshd@weifenf.com14355492830001993909323&Expires=&Signature=I D1NOFtAJSPT16E6imv6JWuq0k=
      * @param url
-     *      格式如：http://keking.ufile.ucloud.com.cn/20171113164107_月度绩效表模板(新).xls?UCloudPublicKey=ucloudtangshd@weifenf.com14355492830001993909323&Expires=&Signature=I D1NOFtAJSPT16E6imv6JWuq0k=
      * @return
      */
     public String getFileNameFromURL(String url) {
@@ -111,14 +110,13 @@ public class FileUtils {
      * @return
      */
     public String getSuffixFromFileName(String fileName) {
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
-        return suffix;
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
      * 从路径中获取
+     * 类似这种：C:\Users\yudian-it\Downloads
      * @param path
-     *      类似这种：C:\Users\yudian-it\Downloads
      * @return
      */
     public String getFileNameFromPath(String path) {
@@ -126,38 +124,15 @@ public class FileUtils {
     }
 
     public List<String> listPictureTypes(){
-        List<String> list = Lists.newArrayList();
-        list.add("jpg");
-        list.add("jpeg");
-        list.add("png");
-        list.add("gif");
-        list.add("bmp");
-        list.add("ico");
-        list.add("RAW");
-        return list;
+        return Arrays.asList("jpg","jpeg","png","gif","bmp","ico","RAW");
     }
 
     public List<String> listArchiveTypes(){
-        List<String> list = Lists.newArrayList();
-        list.add("rar");
-        list.add("zip");
-        list.add("jar");
-        list.add("7-zip");
-        list.add("tar");
-        list.add("gzip");
-        list.add("7z");
-        return list;
+        return Arrays.asList("rar","zip","jar","7-zip","tar","gzip","7z");
     }
 
     public List<String> listOfficeTypes() {
-        List<String> list = Lists.newArrayList();
-        list.add("docx");
-        list.add("doc");
-        list.add("xls");
-        list.add("xlsx");
-        list.add("ppt");
-        list.add("pptx");
-        return list;
+        return Arrays.asList("docx","doc","xls","xlsx","ppt","pptx");
     }
 
     /**
@@ -166,7 +141,7 @@ public class FileUtils {
      * @return
      */
     public String getRelativePath(String absolutePath) {
-        return absolutePath.substring(fileDir.length());
+        return absolutePath.substring(filePreView.length());
     }
 
     public void addConvertedFile(String fileName, String value){

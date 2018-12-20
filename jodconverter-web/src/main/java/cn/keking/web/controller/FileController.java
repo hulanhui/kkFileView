@@ -30,25 +30,25 @@ import java.util.UUID;
 public class FileController {
     @Value("${file.dir}")
     String fileDir;
+
     @Autowired
     FileUtils fileUtils;
-    String demoDir = "demo";
-    String demoPath = demoDir + File.separator;
 
     @RequestMapping(value = "fileUpload", method = RequestMethod.POST)
     public String fileUpload(@RequestParam("file") MultipartFile file,
                              HttpServletRequest request) throws JsonProcessingException {
+
         String fileName = file.getOriginalFilename();
         // 判断该文件类型是否有上传过，如果上传过则提示不允许再次上传
         if (existsTypeFile(fileName)) {
             return new ObjectMapper().writeValueAsString(new ReturnResponse<String>(1, "每一种类型只可以上传一个文件，请先删除原有文件再次上传", null));
         }
-        File outFile = new File(fileDir + demoPath);
+        File outFile = new File(fileDir);
         if (!outFile.exists()) {
             outFile.mkdirs();
         }
         try(InputStream in = file.getInputStream();
-            OutputStream ot = new FileOutputStream(fileDir + demoPath + fileName)){
+            OutputStream ot = new FileOutputStream(fileDir + fileName)){
             byte[] buffer = new byte[1024];
             int len;
             while ((-1 != (len = in.read(buffer)))) {
@@ -66,7 +66,7 @@ public class FileController {
         if (fileName.contains("/")) {
             fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
         }
-        File file = new File(fileDir + demoPath + fileName);
+        File file = new File(fileDir + fileName);
         if (file.exists()) {
             file.delete();
         }
@@ -76,9 +76,9 @@ public class FileController {
     @RequestMapping(value = "listFiles", method = RequestMethod.GET)
     public String getFiles() throws JsonProcessingException {
         List<Map<String, String>> list = Lists.newArrayList();
-        File file = new File(fileDir + demoPath);
+        File file = new File(fileDir);
         if (file.exists()) {
-            Arrays.stream(file.listFiles()).forEach(file1 -> list.add(ImmutableMap.of("fileName", demoDir + "/" + file1.getName())));
+            Arrays.stream(file.listFiles()).forEach(file1 -> list.add(ImmutableMap.of("fileName", file1.getName())));
         }
         return new ObjectMapper().writeValueAsString(list);
     }
@@ -98,7 +98,7 @@ public class FileController {
     private boolean existsTypeFile(String fileName) {
         boolean result = false;
         String suffix = fileUtils.getSuffixFromFileName(fileName);
-        File file = new File(fileDir + demoPath);
+        File file = new File(fileDir);
         if (file.exists()) {
             for(File file1 : file.listFiles()){
                 String existsFileSuffix = fileUtils.getSuffixFromFileName(file1.getName());

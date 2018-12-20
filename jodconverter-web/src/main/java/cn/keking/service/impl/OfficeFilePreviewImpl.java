@@ -9,7 +9,6 @@ import cn.keking.utils.OfficeToPdf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
@@ -25,8 +24,8 @@ public class OfficeFilePreviewImpl implements FilePreview {
     @Autowired
     FileUtils fileUtils;
 
-    @Value("${file.dir}")
-    String fileDir;
+    @Value("${file.preview}")
+    String filePreView;
 
     @Autowired
     DownloadUtils downloadUtils;
@@ -44,7 +43,7 @@ public class OfficeFilePreviewImpl implements FilePreview {
         String pdfName = fileName.substring(0, fileName.lastIndexOf(".") + 1) + (isHtml ? "html" : "pdf");
         // 判断之前是否已转换过，如果转换过，直接返回，否则执行转换
         if (!fileUtils.listConvertedFiles().containsKey(pdfName)) {
-            String filePath = fileDir + fileName;
+            String filePath = filePreView + fileName;
             if (!new File(filePath).exists()) {
                 ReturnResponse<String> response = downloadUtils.downLoad(decodedUrl, suffix, null);
                 if (0 != response.getCode()) {
@@ -53,7 +52,7 @@ public class OfficeFilePreviewImpl implements FilePreview {
                 }
                 filePath = response.getContent();
             }
-            String outFilePath = fileDir + pdfName;
+            String outFilePath = filePreView + pdfName;
             if (StringUtils.hasText(outFilePath)) {
                 officeToPdf.openOfficeToPDF(filePath, outFilePath);
                 File f = new File(filePath);

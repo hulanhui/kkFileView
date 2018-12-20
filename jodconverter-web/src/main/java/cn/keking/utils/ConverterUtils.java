@@ -25,6 +25,9 @@ public class ConverterUtils {
 
     @Value("${office.home}")
     String officeHome;
+    @Value("${office.port}")
+    Integer officePort;
+
 //    OpenOfficeConnection connection;
     OfficeManager officeManager;
 
@@ -34,7 +37,7 @@ public class ConverterUtils {
 ////            connection.connect();
         DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
         configuration.setOfficeHome(officeHome);
-        configuration.setPortNumber(8100);
+        configuration.setPortNumber(officePort);
         officeManager = configuration.buildOfficeManager();
         officeManager.start();
         // 设置任务执行超时为5分钟
