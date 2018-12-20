@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <title>图片预览图</title>
+    <title>文件上传下载预览</title>
     <link rel="stylesheet" href="css/viewer.min.css">
     <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<h1>文件预览项目接入和测试界面</h1>
+<h3>文件预览接入</h3>
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+    <h3>文件预览测试</h3>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -64,7 +65,7 @@
                 <p style="color: red;">因为是测试所以一种文件只允许上传一个</p>
                 <div style="padding: 10px">
                     <form enctype="multipart/form-data" id="fileUpload">
-                        <input type="file" name="file" />
+                        <input type="file" name="file" /></br>
                         <input type="button" id="btnsubmit" value=" 上 传 " />
                     </form>
                 </div>
@@ -74,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="panel">
+    <#--<div class="panel">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion"
@@ -107,7 +108,7 @@
         </div>
         <div class="panel-body">
             <div style="width: 80%">
-                <!-- 多说评论框 start -->
+                <!-- 多说评论框 start &ndash;&gt;
                 <div id="SOHUCS" sid="kkfileView"></div>
                 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
                 <script type="text/javascript">
@@ -116,11 +117,11 @@
                         conf: 'prod_c53858654f21b8f813c14b7681f5405a'
                     });
                 </script>
-                <!-- 多说评论框 end -->
+                <!-- 多说评论框 end &ndash;&gt;
             </div>
         </div>
 
-    </div>
+    </div>-->
 </div>
 
 <div class="loading_container">
