@@ -111,6 +111,10 @@ class ManagedOfficeProcess {
 	private void doStartProcessAndConnect() throws OfficeException {
 		try {
 			process.start();
+		} catch (Exception exception) {
+			logger.log(Level.SEVERE, "could not start open office，The reason may be that it's already started!");
+		}
+		try {
 			new Retryable() {
 				protected void attempt() throws TemporaryException, Exception {
 					try {
